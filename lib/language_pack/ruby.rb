@@ -364,9 +364,9 @@ ERROR
 
       version = run("env RUBYOPT=\"#{syck_hack}\" bundle version").strip
       topic("Installing dependencies using #{version}")
-
+	  puts "Debug 1"
       load_bundler_cache
-
+	  puts "Debug 2"
       bundler_output = ""
       Dir.mktmpdir("libyaml-") do |tmpdir|
         libyaml_dir = "#{tmpdir}/#{LIBYAML_PATH}"
@@ -388,9 +388,11 @@ ERROR
         # codon since it uses bundler.
         env_vars       = "env BUNDLE_GEMFILE=#{pwd}/Gemfile BUNDLE_CONFIG=#{pwd}/.bundle/config CPATH=#{yaml_include}:$CPATH CPPATH=#{yaml_include}:$CPPATH LIBRARY_PATH=#{yaml_lib}:$LIBRARY_PATH RUBYOPT=\"#{syck_hack}\""
         puts "Running: #{bundle_command}"
+		puts "Debug 4"
         bundler_output << pipe("#{env_vars} #{bundle_command} --no-clean 2>&1")
-
+		puts "Debug 5"
       end
+	  puts "Debug 3"
 
       if $?.success?
         log "bundle", :status => "success"
