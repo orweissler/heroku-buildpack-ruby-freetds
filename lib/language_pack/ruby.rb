@@ -112,8 +112,11 @@ private
       old_system_path = "/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
       @ruby_version = run_stdout("env PATH=#{old_system_path}:#{bundler_path}/bin GEM_PATH=#{bundler_path} bundle platform --ruby").chomp
     end
-
-    if @ruby_version == "No ruby version specified" && ENV['RUBY_VERSION']
+	
+	if ENV['RUBY_VERSION']
+	  @ruby_version = ENV['RUBY_VERSION']
+      @ruby_version_env_var = true
+    elsif @ruby_version == "No ruby version specified" && ENV['RUBY_VERSION']
       # for backwards compatibility.
       # this will go away in the future
       @ruby_version = ENV['RUBY_VERSION']
