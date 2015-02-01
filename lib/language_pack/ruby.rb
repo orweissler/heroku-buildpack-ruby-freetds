@@ -104,31 +104,7 @@ private
   # fetch the ruby version from bundler
   # @return [String, nil] returns the ruby version if detected or nil if none is detected
   def ruby_version
-    return @ruby_version if @ruby_version_run
-
-    @ruby_version_run = true
-
-    bootstrap_bundler do |bundler_path|
-      old_system_path = "/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-      @ruby_version = run_stdout("env PATH=#{old_system_path}:#{bundler_path}/bin GEM_PATH=#{bundler_path} bundle platform --ruby").chomp
-    end
-	puts "ENV " + ENV['RUBY_VERSION']
-	if ENV['RUBY_VERSION']
-	  @ruby_version = ENV['RUBY_VERSION']
-      @ruby_version_env_var = true
-    elsif @ruby_version == "No ruby version specified" && ENV['RUBY_VERSION']
-      # for backwards compatibility.
-      # this will go away in the future
-      @ruby_version = ENV['RUBY_VERSION']
-      @ruby_version_env_var = true
-    elsif @ruby_version == "No ruby version specified"
-      @ruby_version = nil
-    else
-      @ruby_version = @ruby_version.sub('(', '').sub(')', '').split.join('-')
-      @ruby_version_env_var = false
-    end
-	puts "Ruby version detected #{@ruby_version}"
-    @ruby_version
+    return 'ruby-2.0.0'
   end
 
   # bootstraps bundler so we can pull the ruby version
